@@ -85,7 +85,7 @@ fi
 # P = MA_WINDOW
 awk '{print $1, $5}' $FILE_NAME | awk 'BEGIN { P = 255; } { x = $2; i = NR % P; MA += (x - Z[i]) / P; Z[i] = x; print $1, MA; }' > $FILE_NAME.MA-255
 awk '{print $1, $5}' $FILE_NAME | awk 'BEGIN { P = 85; } { x = $2; i = NR % P; MA += (x - Z[i]) / P; Z[i] = x; print $1, MA; }' > $FILE_NAME.MA-85
-awk '{print $1, $5}' $FILE_NAME | awk 'BEGIN { P = 765; } { x = $2; i = NR % P; MA += (x - Z[i]) / P; Z[i] = x; print $1, MA; }' > $FILE_NAME.MA-765
+awk '{print $1, $5}' $FILE_NAME | awk 'BEGIN { P = 34; } { x = $2; i = NR % P; MA += (x - Z[i]) / P; Z[i] = x; print $1, MA; }' > $FILE_NAME.MA-34
 
 # draw plot
 gnuplot -persist <<-EOFMarker 
@@ -94,11 +94,12 @@ set label 1 "LIMIT = $powLimit"; set label 1 at graph 0.015, 0.94 tc rgb "black"
 set label 2 "BLOCKS = $TOTAL_BLOCK_AMOUNT"; set label 2 at graph 0.015, 0.88 tc rgb "black";
 set xrange [0:*]; set xlabel "Block Number"; set xtics 0, 1020 rotate by 45 right; set xtics add ("N=255" 255);
 set yrange [0:20]; set ylabel "Block Time"; set ytics 0, 2; set ytics nomirror;
-set y2range [0:$powLimit*10]; set y2label "Difficulty"; set format y2 '%.2g'; set y2tics 0, $powLimit/1;
-set grid xtics ytics y2tics mxtics mytics my2tics;
+set y2range [0:*]; set y2label "Difficulty"; set format y2 '%.2g'; set y2tics 0, $powLimit/1.5;
+# set grid xtics ytics y2tics mxtics mytics my2tics;
+set grid xtics ytics mxtics mytics;
 plot \
+"$FILE_NAME.MA-34" using 0:2 axis x1y1 w l title "(MA-34) Block Time" lc rgb "#eeeeee" lw 1.0, \
+"$FILE_NAME.MA-85" using 0:2 axis x1y1 w l title "(MA-85) Block Time" lc rgb "#cccccc" lw 1.0, \
 "$FILE_NAME.MA-255" using 0:2 axis x1y1 w l title "(MA-255) Block Time" lc rgb "black" lw 1.25, \
-"$FILE_NAME.MA-85" using 0:2 axis x1y1 w l title "(MA-85) Block Time" lc rgb "#dcdcdc" lw 1.0, \
-"$FILE_NAME.MA-765" using 0:2 axis x1y1 w l title "(MA-765) Block Time" lc rgb "#dcdcdc" lw 1.0, \
 "$FILE_NAME" using 1:3 axis x1y2 w l title "Difficulty" lc rgb "red" lw 1.25,
 EOFMarker
