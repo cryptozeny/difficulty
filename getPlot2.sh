@@ -1,4 +1,4 @@
-#190113 #MA
+#190112 #MA
 #!/bin/bash
 
 # INTERVAL_OFFSET=-6171284
@@ -28,7 +28,7 @@ DIFF_NAME="DigiShieldN255"
 COIN_CLI="$HOME/git/SUGAR/WALLET/sugarchain-v0.16.3/src/sugarchain-cli"
 COIN_OPTION="-rpcuser=username -rpcpassword=password -testnet"
 TOTAL_BLOCK_AMOUNT=$($COIN_CLI $COIN_OPTION getblockcount)
-# TOTAL_BLOCK_AMOUNT=300
+# TOTAL_BLOCK_AMOUNT=300 # test
 FILE_NAME="$COIN_NAME-$POW_NAME-$DIFF_NAME.csv"
 DIFF_INIT=$(CONVERT_SCIENTIFIC_NOTATION $POW_LIMIT)
 
@@ -90,8 +90,8 @@ awk '{print $1, $5}' $FILE_NAME | awk 'BEGIN { P = 765; } { x = $2; i = NR % P; 
 # draw plot
 gnuplot -persist <<-EOFMarker 
 set title "$FILE_NAME"; set term qt size 1200, 400;
-set label 1 "powLimit = $powLimit"; set label 1 at graph 0.015, 0.94 tc rgb "black";
-set label 2 "totalBlocks = $TOTAL_BLOCK_AMOUNT"; set label 2 at graph 0.015, 0.88 tc rgb "black";
+set label 1 "LIMIT = $powLimit"; set label 1 at graph 0.015, 0.94 tc rgb "black";
+set label 2 "BLOCKS = $TOTAL_BLOCK_AMOUNT"; set label 2 at graph 0.015, 0.88 tc rgb "black";
 set xrange [0:*]; set xlabel "Block Number"; set xtics 0, 1020 rotate by 45 right; set xtics add ("N=255" 255);
 set yrange [0:20]; set ylabel "Block Time"; set ytics 0, 2; set ytics nomirror;
 set y2range [0:$powLimit*10]; set y2label "Difficulty"; set format y2 '%.2g'; set y2tics 0, $powLimit/1;
