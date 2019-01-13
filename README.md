@@ -10,5 +10,5 @@ Usage
 
 First of all, you should launch sugarchain or sugarchain-qt with server=1.
 ```bash
-./plot2.sh
+./getPlot2.sh
 ```
