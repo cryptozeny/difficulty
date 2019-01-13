@@ -26,6 +26,13 @@ COIN_NAME="SugarchainTestnet"
 POW_NAME="YesPower10Sugar"
 DIFF_NAME="DigiShieldN255"
 COIN_CLI="$HOME/git/SUGAR/WALLET/sugarchain-v0.16.3/src/sugarchain-cli"
+
+# check COIN_CLI
+if [ ! -e $COIN_CLI ]; then
+    echo "ERROR: NO COIN_CLI: $COIN_CLI"
+    exit 1
+fi
+
 COIN_OPTION="-rpcuser=username -rpcpassword=password -testnet"
 TOTAL_BLOCK_AMOUNT=$($COIN_CLI $COIN_OPTION getblockcount)
 # TOTAL_BLOCK_AMOUNT=300 # test
@@ -60,7 +67,7 @@ do
     CUR_TIME=$( echo $CUR_DATA | awk '{print $1}' )
     CUR_DIFF=$( echo $CUR_DATA | awk '{print $2}' )
     PRE_HASH=$( echo $CUR_DATA | awk '{print $3}' )
-    PRE_DATA=$( $COIN_CLI $COIN_OPTION getblock $PRE_HASH | jq -r '[.time, .difficulty, .previousblockhash] | "\(.[0]) \(.[1]) \(.[2])"')
+    PRE_DATA=$( $COIN_CLI $COIN_OPTION getblock $PRE_HASH | jq -r '[.time, .difficulty, .previousblockhash] | "\(.[0]) \(.[1]) \(.[2])"') # call RPC twice: it slows 2x
     PRE_TIME=$( echo $PRE_DATA | awk '{print $1}' )
     CUR_DIFF_RATIO=$( echo "scale=3; $(CONVERT_SCIENTIFIC_NOTATION $CUR_DIFF) / $(CONVERT_SCIENTIFIC_NOTATION $powLimit)" | bc )
     
@@ -102,4 +109,5 @@ plot \
 "$FILE_NAME.MA-85" using 0:2 axis x1y1 w l title "(MA-85) Block Time" lc rgb "#cccccc" lw 1.0, \
 "$FILE_NAME.MA-255" using 0:2 axis x1y1 w l title "(MA-255) Block Time" lc rgb "black" lw 1.25, \
 "$FILE_NAME" using 1:3 axis x1y2 w l title "Difficulty" lc rgb "red" lw 1.25,
+# caution at the end: no "\"
 EOFMarker
