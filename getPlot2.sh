@@ -2,7 +2,7 @@
 
 # init
 COIN_CLI="$HOME/git/SUGAR/WALLET/sugarchain-v0.16.3/src/sugarchain-cli"
-COIN_OPTION="-rpcuser=username -rpcpassword=password -testnet"
+COIN_OPTION="-rpcuser=username -rpcpassword=password -testnet" # MAIN: nothing | TESTNET: -testnet | REGTEST: -regtest
 
 CHAIN_TYPE=$( $COIN_CLI $COIN_OPTION getblockchaininfo | jq -r '[.chain] | "\(.[0])"' )
 
@@ -108,18 +108,18 @@ awk '{print $1, $5}' $FILE_NAME | awk -v MA_SIZE="$MA_SIZE_1" 'BEGIN { P = MA_SI
 awk '{print $1, $5}' $FILE_NAME | awk -v MA_SIZE="$MA_SIZE_2" 'BEGIN { P = MA_SIZE; } { x = $2; i = NR % P; MA += (x - Z[i]) / P; Z[i] = x; print $1, MA; }' > $FILE_NAME.MA-$MA_SIZE_2
 
 # plot parameters
-SET_XRANGE="[0:*]"
-SET_YRANGE="[0:10]"
-SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*3]"
+SET_XRANGE="[1:*]"
+SET_YRANGE="[0:7.5]"
+SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*2.5]"
 
 # plot draw
 gnuplot -persist <<-EOFMarker 
 set title "$FILE_NAME"; set term qt size 1200, 600;
 set label 1 "LIMIT = $POW_LIMIT"; set label 1 at graph 0.015, 0.94 tc rgb "black";
 set label 2 "BLOCKS = $TOTAL_BLOCK_AMOUNT"; set label 2 at graph 0.015, 0.88 tc rgb "black";
-set xrange $SET_XRANGE; set xlabel "Block Number"; set xtics 0, 17*60 rotate by 45 right; set xtics add ("GENESIS" 0) ("N+2=512" 512);
+set xrange $SET_XRANGE; set xlabel "Block Number"; set xtics 1, 17*10 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set yrange $SET_YRANGE; set ylabel "Block Time"; set ytics 0, 1; set ytics nomirror;
-set y2range $SET_Y2RANGE; set y2label "Difficulty"; set format y2 '%.3g'; set y2tics $POW_LIMIT, $POW_LIMIT/5;
+set y2range $SET_Y2RANGE; set y2label "Difficulty"; set format y2 '%.4g'; set y2tics $POW_LIMIT, $POW_LIMIT/5;
 # set grid xtics ytics y2tics mxtics mytics my2tics;
 set grid xtics ytics;
 set key invert; # reverse key order
