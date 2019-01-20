@@ -4,8 +4,9 @@
 # init
 COIN_CLI="$HOME/git/SUGAR/WALLET/sugarchain-v0.16.3/src/sugarchain-cli"
 COIN_OPTION="-rpcuser=username -rpcpassword=password -testnet" # MAIN: nothing | TESTNET: -testnet | REGTEST: -regtest
+GET_INFO="$COIN_CLI $COIN_OPTION"
 
-CHAIN_TYPE=$( $COIN_CLI $COIN_OPTION getblockchaininfo | jq -r '[.chain] | "\(.[0])"' )
+CHAIN_TYPE=$( $GET_INFO getblockchaininfo | jq -r '[.chain] | "\(.[0])"' )
 
 BLOCK_TIME="5"
 COIN_NAME="$CHAIN_TYPE.Sugarchain(t$BLOCK_TIME)"
@@ -13,27 +14,26 @@ POW_NAME="YP"
 DIFF_NAME="DS"
 DIFF_N_SIZE="510"
 
-GENESIS_HASH=$( $COIN_CLI $COIN_OPTION getblockhash 0 )
+GENESIS_HASH=$( $GET_INFO getblockhash 0 )
 
 # POW_LIMIT="1.192074847720173e-07"
-POW_LIMIT=$( $COIN_CLI $COIN_OPTION getblock $GENESIS_HASH | jq -r '[.difficulty] | "\(.[0])"' )
+POW_LIMIT=$( $GET_INFO getblock $GENESIS_HASH | jq -r '[.difficulty] | "\(.[0])"' )
 
 # TOTAL_BLOCK_AMOUNT=600 # test
-TOTAL_BLOCK_AMOUNT=$($COIN_CLI $COIN_OPTION getblockcount)
+TOTAL_BLOCK_AMOUNT=$($GET_INFO getblockcount)
 
 FILE_NAME="$COIN_NAME-$POW_NAME-$DIFF_NAME(n$DIFF_N_SIZE).csv"
 
 function GET_GENESIS_OFFSET() {
     #statements
-    genesisHash=$( $COIN_CLI $COIN_OPTION getblockhash 0 )
-    genesisData=$( $COIN_CLI $COIN_OPTION getblock $genesisHash | jq -r '[.time, .difficulty, .previousblockhash] | "\(.[0]) \(.[1]) \(.[2])"' )
+    genesisData=$( $GET_INFO getblock $($GET_INFO getblockhash 0) | jq -r '[.time, .difficulty, .previousblockhash] | "\(.[0]) \(.[1]) \(.[2])"' )
     genesisTime=$( echo $genesisData | awk '{print $1}' )
-    firstHash=$( $COIN_CLI $COIN_OPTION getblockhash 1 )
-    firstData=$( $COIN_CLI $COIN_OPTION getblock $firstHash | jq -r '[.time, .difficulty, .previousblockhash] | "\(.[0]) \(.[1]) \(.[2])"' )
+    firstData=$( $GET_INFO getblock $($GET_INFO getblockhash 1) | jq -r '[.time, .difficulty, .previousblockhash] | "\(.[0]) \(.[1]) \(.[2])"' )
     firstTime=$( echo $firstData | awk '{print $1}' )
     genesisOffset=$(( $firstTime - $genesisTime ))
     echo $genesisOffset
 }
+GENESIS_OFFSET=$(GET_GENESIS_OFFSET)
 
 function CONVERT_SCIENTIFIC_NOTATION() {
     # BC to handle scientific notation
@@ -71,17 +71,16 @@ sleep 1
 # loop
 for BLOCK_COUNT in `seq $START_BLOCK $TOTAL_BLOCK_AMOUNT`;
 do
-    CUR_HASH=$( $COIN_CLI $COIN_OPTION getblockhash $BLOCK_COUNT )
-    CUR_DATA=$( $COIN_CLI $COIN_OPTION getblock $CUR_HASH | jq -r '[.time, .difficulty, .previousblockhash] | "\(.[0]) \(.[1]) \(.[2])"' )
+    CUR_DATA=$( $GET_INFO getblock $($GET_INFO getblockhash $BLOCK_COUNT) | jq -r '[.time, .difficulty, .previousblockhash] | "\(.[0]) \(.[1]) \(.[2])"' )
     CUR_TIME=$( echo $CUR_DATA | awk '{print $1}' )
     CUR_DIFF=$( echo $CUR_DATA | awk '{print $2}' )
     PRE_HASH=$( echo $CUR_DATA | awk '{print $3}' )
-    PRE_DATA=$( $COIN_CLI $COIN_OPTION getblock $PRE_HASH | jq -r '[.time, .difficulty, .previousblockhash] | "\(.[0]) \(.[1]) \(.[2])"') # call RPC twice: it slows 2x
+    PRE_DATA=$( $GET_INFO getblock $PRE_HASH | jq -r '[.time] | "\(.[0])"') # call RPC twice: it slows 2x
     PRE_TIME=$( echo $PRE_DATA | awk '{print $1}' )
     CUR_DIFF_RATIO=$( echo "scale=3; $(CONVERT_SCIENTIFIC_NOTATION $CUR_DIFF) / $(CONVERT_SCIENTIFIC_NOTATION $POW_LIMIT)" | bc )
     
     if [ $BLOCK_COUNT == 1 ]; then
-        CUR_INTERVAL=$(( $CUR_TIME - $PRE_TIME - $(GET_GENESIS_OFFSET) ))
+        CUR_INTERVAL=$(( $CUR_TIME - $PRE_TIME - $GENESIS_OFFSET ))
     else
         CUR_INTERVAL=$(( $CUR_TIME - $PRE_TIME ))
     fi
@@ -110,7 +109,7 @@ awk '{print $1, $5}' $FILE_NAME | awk -v MA_SIZE="$MA_SIZE_2" 'BEGIN { P = MA_SI
 # plot parameters
 SET_XRANGE="[1:*]"
 SET_YRANGE="[0:10]"
-SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*5]"
+SET_Y2RANGE="[0:$POW_LIMIT*5]"
 
 # plot draw
 gnuplot -persist <<-EOFMarker 
@@ -119,7 +118,7 @@ set label 1 "LIMIT = $POW_LIMIT"; set label 1 at graph 0.81, 1.03 tc rgb "black"
 set label 2 "BLOCKS = $TOTAL_BLOCK_AMOUNT"; set label 2 at graph 0.81, 1.06 tc rgb "black";
 set xrange $SET_XRANGE; set xlabel "Block Number"; set xtics 1, 17*300 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set yrange $SET_YRANGE; set ylabel "Block Time"; set ytics 0, 1; set ytics nomirror;
-set y2range $SET_Y2RANGE; set y2label "Difficulty"; set format y2 '%.4g'; set y2tics $POW_LIMIT, $POW_LIMIT/2.5;
+set y2range $SET_Y2RANGE; set y2label "Difficulty"; set format y2 '%.3g'; set y2tics 0, $POW_LIMIT/2; set y2tics add ("{/:Bold LIMIT}" $POW_LIMIT);
 # set grid xtics ytics y2tics mxtics mytics my2tics;
 set grid xtics ytics;
 set key top left invert; set key box opaque;
