@@ -1,4 +1,5 @@
 #!/bin/bash
+## getDifficulty
 
 # init
 COIN_CLI="$HOME/git/SUGAR/WALLET/sugarchain-v0.16.3/src/sugarchain-cli"
@@ -108,20 +109,20 @@ awk '{print $1, $5}' $FILE_NAME | awk -v MA_SIZE="$MA_SIZE_2" 'BEGIN { P = MA_SI
 
 # plot parameters
 SET_XRANGE="[1:*]"
-SET_YRANGE="[0:7.5]"
-SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*2.5]"
+SET_YRANGE="[0:10]"
+SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*5]"
 
 # plot draw
 gnuplot -persist <<-EOFMarker 
-set title "$FILE_NAME"; set term qt size 1200, 600;
-set label 1 "LIMIT = $POW_LIMIT"; set label 1 at graph 0.015, 0.94 tc rgb "black";
-set label 2 "BLOCKS = $TOTAL_BLOCK_AMOUNT"; set label 2 at graph 0.015, 0.88 tc rgb "black";
-set xrange $SET_XRANGE; set xlabel "Block Number"; set xtics 1, 17*10 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
+set title "$FILE_NAME" offset -58; set term qt size 1200, 600;
+set label 1 "LIMIT = $POW_LIMIT"; set label 1 at graph 0.81, 1.03 tc rgb "black";
+set label 2 "BLOCKS = $TOTAL_BLOCK_AMOUNT"; set label 2 at graph 0.81, 1.06 tc rgb "black";
+set xrange $SET_XRANGE; set xlabel "Block Number"; set xtics 1, 17*300 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set yrange $SET_YRANGE; set ylabel "Block Time"; set ytics 0, 1; set ytics nomirror;
-set y2range $SET_Y2RANGE; set y2label "Difficulty"; set format y2 '%.4g'; set y2tics $POW_LIMIT, $POW_LIMIT/5;
+set y2range $SET_Y2RANGE; set y2label "Difficulty"; set format y2 '%.4g'; set y2tics $POW_LIMIT, $POW_LIMIT/2.5;
 # set grid xtics ytics y2tics mxtics mytics my2tics;
 set grid xtics ytics;
-set key invert; # reverse key order
+set key top left invert; set key box opaque;
 plot \
 "$FILE_NAME.MA-$MA_SIZE_2" using 0:2 axis x1y1 w l title "(MA-$MA_SIZE_2) Block Time" lc rgb "#eeeeee" lw 1.0, \
 "$FILE_NAME.MA-$MA_SIZE_1" using 0:2 axis x1y1 w l title "(MA-$MA_SIZE_1) Block Time" lc rgb "#cccccc" lw 1.0, \
