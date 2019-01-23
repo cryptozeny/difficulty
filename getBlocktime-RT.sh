@@ -27,9 +27,8 @@ printf "%s \t %s \t %s \t\t %s \t %s \t %s\n" BLOCK TIMESTAMP DIFFICULTY RATIO I
 
 tail -f $LOG_LOCATION | while read line;
 do
-    CURRENT_BLOCK_NUMBER=$(echo $line | grep "height=" | cut -f 6 -d " " | cut -c8-)
+    CURRENT_BLOCK_NUMBER=$(echo $line | grep "height=" | cut -f 6 -d " " | cut -c8-) ## grep height from line
     
-    # if (( "$CBN" >= "1" )) && (( "$CBN" < "10200+1" )) && [ $PID != 1 ]; then
     if [[ $CURRENT_BLOCK_NUMBER =~ $CHECK_INTEGER ]] && (( "$CURRENT_BLOCK_NUMBER" >= "2" )); ## start from block height 2
     then
         CUR_DATA=$( $GET_INFO getblock $($GET_INFO getblockhash $CURRENT_BLOCK_NUMBER) | jq -r '[.time, .difficulty, .previousblockhash] | "\(.[0]) \(.[1]) \(.[2])"' )
@@ -45,6 +44,8 @@ do
         COUNT=$(($COUNT + 1))
         
         INTERVAL_MEAN=$( echo "scale=2; $INTERVAL_TOTAL / $COUNT" | bc )
+        
+        # CUR_TIME=$(date -d @$CUR_TIME '+%y%m%d-%H:%M:%S') ## convert format: 1548284490 to 190124-08:01:30
         
         printf "%s \t %s \t %s \t %s \t %s \t %s \t %s\n" $CURRENT_BLOCK_NUMBER $CUR_TIME $CUR_DIFF $CUR_DIFF_RATIO $CUR_INTERVAL $INTERVAL_MEAN 
     fi
