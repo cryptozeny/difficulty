@@ -42,7 +42,7 @@ do
         
         printf "CURRENT BLOCK NUMBER = %d   PID = \033[31;1m %s \033[0m \n" $CBN $PID # \033[31;1m RED \033[0m
         
-        if (( "$CBN" < "5100+1" )) && [ $PID != 1 ]; then
+        if (( "$CBN" >= "1" )) && (( "$CBN" < "5100+1" )) && [ $PID != 1 ]; then
             PID=1
             CPUMINER_CORE_AMOUNT="-t2"
             # echo "PID_1: CUR_BLOCK_NUMBER < 5100+1 $CPUMINER_CORE_AMOUNT"
