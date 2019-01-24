@@ -30,6 +30,7 @@ CHECK_INTEGER='^[0-9]+$'
 PID=NULL
 
 # DUMMY START
+killall cpuminer
 CPUMINER_CORE_AMOUNT="-t$(nproc)" # maximum CPU power: for fast startup
 $RUN_CPUMINER $CPUMINER_CORE_AMOUNT &
 
