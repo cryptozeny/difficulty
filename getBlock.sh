@@ -77,5 +77,5 @@ while true; do
         # '[.time, .difficulty, .previousblockhash] | "\(.[0]) \(.[1]) \(.[2])"'
     done
     
-    sleep $BLOCK_TIME
+    sleep $BLOCK_TIME # update every blocktime
 done
