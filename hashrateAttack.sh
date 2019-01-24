@@ -73,34 +73,34 @@ do
             PID=4
             CPUMINER_CORE_AMOUNT="-t8"
             printf "\033[31;1m \n"
-            printf "PID = %d \t CPU = %s \t 25500+1 < CUR_BLOCK_NUMBER < 30600+1 \n" $PID $CPUMINER_CORE_AMOUNT
+            printf "PID = %d \t CPU = %s \t 20400+1 < CUR_BLOCK_NUMBER < 25500+1 \n" $PID $CPUMINER_CORE_AMOUNT
             printf "\033[0m \n"
             killall cpuminer
             $RUN_CPUMINER $CPUMINER_CORE_AMOUNT &
     
-        elif (( "$CBN" >= "30600+1" )) && (( "$CBN" < "35700+1" )) && [[ ${PID} != 5 ]]; then
+        elif (( "$CBN" >= "25500+1" )) && (( "$CBN" < "30600+1" )) && [[ ${PID} != 5 ]]; then
             PID=5
             CPUMINER_CORE_AMOUNT="-t6"
+            printf "\033[31;1m \n"
+            printf "PID = %d \t CPU = %s \t 25500+1 < CUR_BLOCK_NUMBER < 30600+1 \n" $PID $CPUMINER_CORE_AMOUNT
+            printf "\033[0m \n"
+            killall cpuminer
+            $RUN_CPUMINER $CPUMINER_CORE_AMOUNT &
+            
+        elif (( "$CBN" >= "30600+1" )) && (( "$CBN" < "35700+1" )) && [[ ${PID} != 6 ]]; then
+            PID=6
+            CPUMINER_CORE_AMOUNT="-t4"
             printf "\033[31;1m \n"
             printf "PID = %d \t CPU = %s \t 30600+1 < CUR_BLOCK_NUMBER < 35700+1 \n" $PID $CPUMINER_CORE_AMOUNT
             printf "\033[0m \n"
             killall cpuminer
             $RUN_CPUMINER $CPUMINER_CORE_AMOUNT &
             
-        elif (( "$CBN" >= "35700+1" )) && (( "$CBN" < "40800+1" )) && [[ ${PID} != 6 ]]; then
-            PID=6
-            CPUMINER_CORE_AMOUNT="-t4"
-            printf "\033[31;1m \n"
-            printf "PID = %d \t CPU = %s \t 35700+1 < CUR_BLOCK_NUMBER < 40800+1 \n" $PID $CPUMINER_CORE_AMOUNT
-            printf "\033[0m \n"
-            killall cpuminer
-            $RUN_CPUMINER $CPUMINER_CORE_AMOUNT &
-            
-        elif (( "$CBN" >= "40800+1" )) && (( "$CBN" < "45900+1" )) && [[ ${PID} != 7 ]]; then
+        elif (( "$CBN" >= "35700+1" )) && (( "$CBN" < "40800+1" )) && [[ ${PID} != 7 ]]; then
             PID=7
             CPUMINER_CORE_AMOUNT="-t2"
             printf "\033[31;1m \n"
-            printf "PID = %d \t CPU = %s \t 40800+1 < CUR_BLOCK_NUMBER < 45900+1 \n" $PID $CPUMINER_CORE_AMOUNT
+            printf "PID = %d \t CPU = %s \t 35700+1 < CUR_BLOCK_NUMBER < 40800+1 \n" $PID $CPUMINER_CORE_AMOUNT
             printf "\033[0m \n"
             killall cpuminer
             $RUN_CPUMINER $CPUMINER_CORE_AMOUNT &
