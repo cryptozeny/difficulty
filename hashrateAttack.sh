@@ -29,6 +29,10 @@ KILL_CPUMINER="killall cpuminer"
 CHECK_INTEGER='^[0-9]+$'
 PID=NULL
 
+# DUMMY START
+CPUMINER_CORE_AMOUNT="-t1"
+$RUN_CPUMINER $CPUMINER_CORE_AMOUNT &
+
 tail -f $COIN_DEBUG_LOCATION | while read line; 
 do
     # 2019-01-22 18:26:59 UpdateTip: 
