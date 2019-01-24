@@ -30,7 +30,7 @@ CHECK_INTEGER='^[0-9]+$'
 PID=NULL
 
 # DUMMY START
-CPUMINER_CORE_AMOUNT="-t$(nproc)"
+CPUMINER_CORE_AMOUNT="-t$(nproc)" # maximum CPU power: for fast startup
 $RUN_CPUMINER $CPUMINER_CORE_AMOUNT &
 
 tail -f $COIN_DEBUG_LOCATION | while read line; 
