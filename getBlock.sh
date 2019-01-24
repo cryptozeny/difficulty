@@ -1,7 +1,7 @@
 #!/bin/bash
 ## getBlock
 
-# DO
+# DO GET
 # "hash": "9a5c10895dd9b9bce312a400644552878d3bf9c510a444400e39e5ebfb7e7ae8",
 # "strippedsize": 226,
 # "size": 262,
@@ -19,7 +19,7 @@
 # "nTx": 1,
 # "previousblockhash": "8e8e0270b7a6bc36e42cb4dca7ffee7e7648447fe102d1e4006cbc1bc9f8cc19",
 
-# DO NOT
+# DO NOT GET
 # "confirmations": 5589,
 # "tx": [
 # "ecc8fb2948d67b1841a3ab362711667819df8a7185072e06a3bce6e483116262"
@@ -36,7 +36,7 @@ GETBLOCK_FILE_NAME="GETBLOCK-$COIN_NAME.csv"
 
 BLOCK_TIME="5"
 
-## loop until COIN_CLI stops...
+## loop forever...
 while true; do
     # TOTAL_BLOCK_AMOUNT=200 # test
     TOTAL_BLOCK_AMOUNT=$($GET_INFO getblockcount)
@@ -66,7 +66,7 @@ while true; do
     printf "\n"
     sleep 1
     
-    # loop
+    # loop main
     for BLOCK_COUNT in `seq $START_BLOCK $TOTAL_BLOCK_AMOUNT`;
     do
         CUR_DATA=$( $GET_INFO getblock $($GET_INFO getblockhash $BLOCK_COUNT) | \
