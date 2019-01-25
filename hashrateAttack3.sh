@@ -52,13 +52,13 @@ printf "  \n"
 printf "  ATTACK START!  \n"
 printf "  BLOCK RANGE is \t \e[36m %d to %d \e[39m \n" $START_BLOCK $END_BLOCK # cyan
 
-AINTERVAL_IN_SECONDS=$( bc <<< "scale=12; $ATTACK_INTERVAL * $COIN_BLOCK_TIME / 1" )
-printf "  INTERVAL is \t\t \e[36m %d (%.3g seconds) \e[39m \n" $ATTACK_INTERVAL $AINTERVAL_IN_SECONDS # cyan
+AINTERVAL_IN_MINUTES=$( bc <<< "scale=12; $ATTACK_INTERVAL * $COIN_BLOCK_TIME / 60" )
+printf "  INTERVAL is \t\t \e[36m %d (%.2f minutes) \e[39m \n" $ATTACK_INTERVAL $AINTERVAL_IN_MINUTES # cyan
 printf "  PROGRAM_AMOUNT is \t \e[36m %d \e[39m \n" $ATTACK_PROGRAM_AMOUNT # cyan
 
 ATIME_IN_MINUTES=$( bc <<< "scale=12; $ATTACK_INTERVAL * $ATTACK_PROGRAM_AMOUNT * $COIN_BLOCK_TIME / 60" )
 ABLOCK_AMOUNT=$( bc <<< "$ATTACK_INTERVAL * $ATTACK_PROGRAM_AMOUNT" )
-printf "  TOTAL BLOCKS is \t \e[36m %d (%.3g minutes) \e[39m \n" $ABLOCK_AMOUNT $ATIME_IN_MINUTES # cyan
+printf "  TOTAL BLOCKS is \t \e[36m %d (%.2f minutes) \e[39m \n" $ABLOCK_AMOUNT $ATIME_IN_MINUTES # cyan
 printf "  \n"
 printf "=====\n"
 
@@ -138,57 +138,4 @@ do
     
     trap "killall cpuminer 2>&1 >/dev/null" SIGINT # prevent cpu overheat
     
-    # N_ATTACK_INTERVAL=$(( $START_BLOCK % $ATTACK_INTERVAL ))  # 20000 % 10
-    # # echo $N_ATTACK_INTERVAL
-    # 
-    # if (( $N_ATTACK_INTERVAL == $(( $BLOCK_COUNT % $ATTACK_INTERVAL )) )); then  # start from 2
-    # 
-    #     if (( "$N_NUMBER" < "$ATTACK_PROGRAM_AMOUNT" )); then
-    #         N_NUMBER=$(($N_NUMBER+1)) # increse N_state
-    #     fi
-    # 
-    #     PERIOD_BEGIN=$BLOCK_COUNT
-    #     PERIOD_END=$(($BLOCK_COUNT + $ATTACK_INTERVAL - 1))
-    # 
-    #     case $N_NUMBER in
-    #         1)
-    #         (killall cpuminer 2>&1) >/dev/null
-    #         CPUMINER_CORE_AMOUNT=2;;
-    #         2)
-    #         (killall cpuminer 2>&1) >/dev/null
-    #         CPUMINER_CORE_AMOUNT=4;;
-    #         3)
-    #         (killall cpuminer 2>&1) >/dev/null
-    #         CPUMINER_CORE_AMOUNT=6;;
-    #         4)
-    #         (killall cpuminer 2>&1) >/dev/null
-    #         CPUMINER_CORE_AMOUNT=8;;
-    #         5)
-    #         (killall cpuminer 2>&1) >/dev/null
-    #         CPUMINER_CORE_AMOUNT=6;;
-    #         6)
-    #         (killall cpuminer 2>&1) >/dev/null
-    #         CPUMINER_CORE_AMOUNT=4;;
-    #         7)
-    #         (killall cpuminer 2>&1) >/dev/null
-    #         CPUMINER_CORE_AMOUNT=2;;
-    #     esac
-    #     # \033[31;1m %s \033[0m
-    #     PERIOD_AMOUNT=$(( $PERIOD_END - $PERIOD_BEGIN + 1))
-    #     printf "PHASE: %d BLOCK: %d to %d (%d) \033[31;1m CPU: %d \033[0m \n" $N_NUMBER $PERIOD_BEGIN $PERIOD_END $PERIOD_AMOUNT $CPUMINER_CORE_AMOUNT  # red
-    # 
-    #     # $DUMMY_APP &
-    #     $RUN_CPUMINER -t$CPUMINER_CORE_AMOUNT -q | grep "Accepted" &
-    # 
-    #     echo -ne "\t\t BLOCK_COUNT: $BLOCK_COUNT\r"
-    #     # echo "  BLOCK_COUNT: $BLOCK_COUNT"
-    #     # sleep 0.1
-    # fi
 done
-
-# TOTAL_ATTACKED_BLOCK_AMOUNT=$(( $BLOCK_COUNT - $START_BLOCK + 1 ))
-# 
-# printf "  \n"
-# printf "  ATTACK FINISHED!  \n"
-# printf "  TOTAL ATTACKED BLOCKS is \t \e[36m $TOTAL_ATTACKED_BLOCK_AMOUNT \e[39m"  # cyan
-# printf "  \n"
