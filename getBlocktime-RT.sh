@@ -23,15 +23,16 @@ CHECK_INTEGER='^[0-9]+$'
 COUNT=0
 
 printf "\n\n\n\n\n"
-printf "%s \t %s \t %s \t\t %s \t %s \t %s\n" BLOCK TIMESTAMP DIFFICULTY RATIO INTVL AVG
+printf "%s\t %s   %s\t\t\t %s   %s\t %s\n" BLOCK TIMESTAMP DIFFICULTY RATIO INTVL AVG
 
 tail -f $LOG_LOCATION | while read line;
 do
-    CURRENT_BLOCK_NUMBER=$(echo $line | grep "height=" | cut -f 6 -d " " | cut -c8-) ## grep height from line
+    # CBN=$(echo $line | grep "height=" | cut -f 6 -d " " | cut -c8-) ## grep height from line
+    CBN=$(echo $line | grep "height=" | cut -f 6 -d " " | cut -c8-) ## grep height from line
     
-    if [[ $CURRENT_BLOCK_NUMBER =~ $CHECK_INTEGER ]] && (( "$CURRENT_BLOCK_NUMBER" >= "2" )); ## start from block height 2
+    if [[ $CBN =~ $CHECK_INTEGER ]] && (( "$CBN" >= "2" )); ## start from block height 2
     then
-        CUR_DATA=$( $GET_INFO getblock $($GET_INFO getblockhash $CURRENT_BLOCK_NUMBER) | jq -r '[.time, .difficulty, .previousblockhash] | "\(.[0]) \(.[1]) \(.[2])"' )
+        CUR_DATA=$( $GET_INFO getblock $($GET_INFO getblockhash $CBN) | jq -r '[.time, .difficulty, .previousblockhash] | "\(.[0]) \(.[1]) \(.[2])"' )
         CUR_TIME=$( echo $CUR_DATA | awk '{print $1}' )
         CUR_DIFF=$( echo $CUR_DATA | awk '{print $2}' )
         PRE_HASH=$( echo $CUR_DATA | awk '{print $3}' )
@@ -47,6 +48,6 @@ do
         
         # CUR_TIME=$(date -d @$CUR_TIME '+%y%m%d-%H:%M:%S') ## convert format: 1548284490 to 190124-08:01:30
         
-        printf "%s \t %s \t %s \t %s \t %s \t %s \t %s\n" $CURRENT_BLOCK_NUMBER $CUR_TIME $CUR_DIFF $CUR_DIFF_RATIO $CUR_INTERVAL $INTERVAL_MEAN 
+        printf "%s\t %s  %s\t %s  %s\t %s\n" $CBN $CUR_TIME $CUR_DIFF $CUR_DIFF_RATIO $CUR_INTERVAL $INTERVAL_MEAN 
     fi
 done
