@@ -8,7 +8,7 @@ difficulty adjustment debugging tools
 Usage
 -----
 
-First of all, you should launch sugarchain or sugarchain-qt with server=1.
+First of all, you should launch sugarchain or sugarchain-qt with `server=1`.
 ```bash
 ./getPlot2.sh
 ```
