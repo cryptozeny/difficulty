@@ -2,9 +2,9 @@
 ## getBlocktime-RT 
 
 ## GET FROM RPC
-COIN_CLI="$HOME/git/SUGAR/WALLET/sugarchain-v0.16.3/src/sugarchain-cli"
-COIN_OPTION="-rpcuser=username -rpcpassword=password -testnet" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
-LOG_LOCATION="$HOME/.sugarchain/debug.log"
+COIN_CLI="$HOME/git/SUGAR/sugarchain-v0.16.3/src/sugarchain-cli"
+COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -testnet" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
+LOG_LOCATION="$HOME/.sugarchain/testnet5/debug.log"
 
 GET_INFO="$COIN_CLI $COIN_OPTION"
 
