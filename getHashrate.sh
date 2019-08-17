@@ -4,14 +4,15 @@
 # getnetworkhashps ( nblocks height )
 
 ## GET FROM RPC
-COIN_CLI="$HOME/git/SUGAR/WALLET/sugarchain-v0.16.3/src/sugarchain-cli"
-COIN_OPTION="-rpcuser=username -rpcpassword=password -testnet" # MAIN: nothing | TESTNET: -testnet | REGTEST: -regtest
+COIN_CLI="$HOME/git/SUGAR/sugarchain-v0.16.3/src/sugarchain-cli"
+COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -testnet" # MAIN: nothing | TESTNET: -testnet | REGTEST: -regtest
 GET_INFO="$COIN_CLI $COIN_OPTION"
 GET_TOTAL_BLOCK_AMOUNT=$($GET_INFO getblockcount)
 # GET_TOTAL_BLOCK_AMOUNT=3500 # test
 
 CHAIN_TYPE=$( $GET_INFO getblockchaininfo | jq -r '[.chain] | "\(.[0])"' )
 
+BLOCK_TIME="5"
 COIN_NAME="$CHAIN_TYPE.Sugarchain(t$BLOCK_TIME)"
 POW_NAME="YP"
 DIFF_NAME="DS"
@@ -50,18 +51,20 @@ do
     printf "%s %s %s\n" $BLOCK_COUNT $CUR_HASHRATE $CUR_DIFF | tee -a $HASHRATE_FILE_NAME
 done
 
-SCALE_FACTOR=9
+Y_SCALE=4.5
+Y2_SCALE=1.65
+PL_RATIO="4"
 
 ## DRAW PLOT & LAUNCH QT
 gnuplot -persist <<-EOFMarker 
 set terminal qt size 1200,600 font "VL P Gothic,10";
 set title "BLOCKS=$GET_TOTAL_BLOCK_AMOUNT       FILE=$HASHRATE_FILE_NAME       LIMIT=$POW_LIMIT" offset -19;
 set xlabel "Block Height";
-set xrange [1:*]; set xtics 1, 510*10 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
+set xrange [1:*]; set xtics 1, 17*50 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set ylabel "Hashrate (hash/s)";
-set yrange [100:100*$SCALE_FACTOR]; set ytics 100; set ytics nomirror;
+set yrange [100:100*$Y_SCALE]; set ytics 100; set ytics nomirror;
 set y2label "Difficulty" tc rgb "red";
-set y2range [$POW_LIMIT:$POW_LIMIT*$SCALE_FACTOR]; set format y2 '%.3g'; set y2tics 0, $POW_LIMIT/1; set y2tics add ($POW_LIMIT);
+set y2range [$POW_LIMIT:$POW_LIMIT*$Y2_SCALE]; set format y2 '%.3g'; set y2tics 0, $POW_LIMIT/$PL_RATIO; set y2tics add ($POW_LIMIT);
 set grid xtics ytics mxtics mytics my2tics;
 set key top left; set key box opaque;
 plot \
