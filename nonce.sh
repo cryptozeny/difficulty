@@ -2,7 +2,7 @@
 ## getNonce
 
 ## GET FROM RPC
-COIN_CLI="$HOME/git/SUGAR/WALLET/sugarchain-v0.16.3/src/sugarchain-cli"
+COIN_CLI="$HOME/git/SUGAR/sugarchain-v0.16.3/src/sugarchain-cli"
 COIN_OPTION="-rpcuser=username -rpcpassword=password -testnet" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
 GET_INFO="$COIN_CLI $COIN_OPTION"
 GET_TOTAL_BLOCK_AMOUNT=$($GET_INFO getblockcount)
@@ -14,7 +14,7 @@ BLOCK_TIME="5"
 COIN_NAME="$CHAIN_TYPE.Sugarchain(t$BLOCK_TIME)"
 POW_NAME="YP"
 DIFF_NAME="DS"
-DIFF_N_SIZE="17"
+DIFF_N_SIZE="510"
 
 NONCE_FILE_NAME="NONCE-$COIN_NAME-$POW_NAME-$DIFF_NAME(n$DIFF_N_SIZE).csv"
 
