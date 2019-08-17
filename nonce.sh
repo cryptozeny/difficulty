@@ -51,7 +51,8 @@ SET_XRANGE="[1:*]"
 # PL_RATIO="2"
 PL_RATIO="4"
 
-SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*1.5]"
+# SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*1.5]"
+SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*1.65]" # center at 2 threads
 
 ## DRAW PLOT & LAUNCH QT
 gnuplot -persist <<-EOFMarker

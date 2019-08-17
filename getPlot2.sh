@@ -117,7 +117,7 @@ PL_RATIO="4"
 # SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*5]"
 # SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*6]"
 # SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*2]"
-SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*1.5]"
+SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*1.65]" # center at 2 threads
 # SET_Y2RANGE="[$POW_LIMIT:2.584149979653205e-07]"
 # SET_Y2RANGE="[$POW_LIMIT:*]"
 
@@ -130,12 +130,12 @@ set title "BLOCKS=$TOTAL_BLOCK_AMOUNT       FILE=$FILE_NAME       LIMIT=$POW_LIM
 set xlabel "Block Number";
 set xrange $SET_XRANGE; set xtics 1, 17*50 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set ylabel "Block Time";
-set yrange $SET_YRANGE; set ytics 0, 1; set ytics add ($BLOCK_TIME);
+set yrange $SET_YRANGE; set ytics 0, 1;
 set ytics nomirror;
 set y2label "Difficulty" tc rgb "red";
 set y2range $SET_Y2RANGE; set format y2 '%.3g'; set y2tics $POW_LIMIT, $POW_LIMIT/$PL_RATIO; set y2tics add ($POW_LIMIT);
 # set grid xtics ytics y2tics mxtics mytics my2tics;
-set grid xtics y2tics;
+set grid xtics;
 set key top left invert; set key box opaque;
 plot \
 "$FILE_NAME.MA-$MA_SIZE_2" using 0:2 axis x1y1 w l title "(MA-$MA_SIZE_2) Block Time" lc rgb "#eeeeee" lw 1.0, \
