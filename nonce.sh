@@ -59,7 +59,7 @@ gnuplot -persist <<-EOFMarker
 set terminal qt size 1200,600 font "VL P Gothic,10";
 set title "BLOCKS=$GET_TOTAL_BLOCK_AMOUNT       FILE=$NONCE_FILE_NAME       LIMIT=$POW_LIMIT" offset -19;
 set xlabel "Block Height";
-set xrange [0:*]; set xtics 1, 17*50 rotate by 45 right; set xtics add ("GENESIS" 0) ( "N+1=$(($DIFF_N_SIZE+1))" $(($DIFF_N_SIZE+1)) );
+set xrange [0:*]; set xtics 1, 17*50 rotate by 45 right; set xtics add ("1" 1) ( "N+1=$(($DIFF_N_SIZE+1))" $(($DIFF_N_SIZE+1)) );
 set ylabel "Nonce";
 set yrange [8.5e+08*-1:8.5e+08*(5+1)]; set ytics 8.5e+08; set format y '%.3g'; set ytics nomirror;
 set y2label "Difficulty" tc rgb "red";
