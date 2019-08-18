@@ -3,7 +3,7 @@
 
 ## GET FROM RPC
 COIN_CLI="$HOME/git/SUGAR/sugarchain-v0.16.3/src/sugarchain-cli"
-COIN_OPTION="-rpcuser=username -rpcpassword=password -regtest" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
+COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -regtest" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
 LOG_LOCATION="$HOME/.sugarchain/regtest/debug.log"
 
 GET_INFO="$COIN_CLI $COIN_OPTION"
