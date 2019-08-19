@@ -3,7 +3,7 @@
 
 # init
 COIN_CLI="$HOME/git/SUGAR/sugarchain-v0.16.3/src/sugarchain-cli"
-COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -main" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
+COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -testnet" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
 GET_INFO="$COIN_CLI $COIN_OPTION"
 
 CHAIN_TYPE=$( $GET_INFO getblockchaininfo | jq -r '[.chain] | "\(.[0])"' )
@@ -117,8 +117,8 @@ PL_RATIO="4"
 # SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*5]"
 # SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*6]"
 # SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*2]"
-# SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*1.65]" # center at 2 threads
-SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*2.125]" # center at 3 threads
+SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*1.65]" # center at 2 threads
+# SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*2.125]" # center at 3 threads
 # SET_Y2RANGE="[$POW_LIMIT:2.584149979653205e-07]"
 # SET_Y2RANGE="[$POW_LIMIT:*]"
 
