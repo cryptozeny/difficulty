@@ -3,7 +3,7 @@
 
 ## GET FROM RPC
 COIN_CLI="$HOME/git/SUGAR/sugarchain-v0.16.3/src/sugarchain-cli"
-COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -testnet" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
+COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -mainnet" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
 GET_INFO="$COIN_CLI $COIN_OPTION"
 GET_TOTAL_BLOCK_AMOUNT=$($GET_INFO getblockcount)
 # GET_TOTAL_BLOCK_AMOUNT=510 # test
@@ -52,7 +52,8 @@ SET_XRANGE="[1:*]"
 PL_RATIO="4"
 
 # SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*1.5]"
-SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*1.65]" # center at 2 threads
+# SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*1.65]" # center at 2 threads
+SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*2.25]" # center at 3 threads
 
 ## DRAW PLOT & LAUNCH QT
 gnuplot -persist <<-EOFMarker
