@@ -109,16 +109,19 @@ awk '{print $1, $5}' $FILE_NAME | awk -v MA_SIZE="$MA_SIZE_2" 'BEGIN { P = MA_SI
 
 # plot parameters
 SET_XRANGE="[1:*]"
+# SET_YRANGE="[0:5*2]"
 SET_YRANGE="[0:5*2]"
 
 # PL_RATIO="2"
-PL_RATIO="4"
+# PL_RATIO="4"
+PL_RATIO="0.0005"
 
 # SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*5]"
 # SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*6]"
+SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*20000]"
 # SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*2]"
 # SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*1.65]" # center at 2 threads
-SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*2.25]" # center at 3 threads
+# SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*2.25]" # center at 3 threads
 # SET_Y2RANGE="[$POW_LIMIT:2.584149979653205e-07]"
 # SET_Y2RANGE="[$POW_LIMIT:*]"
 
@@ -128,8 +131,8 @@ set term qt size 1200, 600;
 set title "BLOCKS=$TOTAL_BLOCK_AMOUNT       FILE=$FILE_NAME       LIMIT=$POW_LIMIT" offset -30;
 # set label 1 "LIMIT = $POW_LIMIT"; set label 1 at graph 0.81, 1.03 tc rgb "black";
 # set label 2 "BLOCKS = $TOTAL_BLOCK_AMOUNT"; set label 2 at graph 0.81, 1.06 tc rgb "black";
-set xlabel "Block Number";
-set xrange $SET_XRANGE; set xtics 1, 17*50 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
+set xlabel "Block Height";
+set xrange $SET_XRANGE; set xtics 1, 17*50*10 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set ylabel "Block Time";
 set yrange $SET_YRANGE; set ytics 0, 1;
 set ytics nomirror;
@@ -137,6 +140,7 @@ set y2label "Difficulty" tc rgb "red";
 set y2range $SET_Y2RANGE; set format y2 '%.3g'; set y2tics $POW_LIMIT, $POW_LIMIT/$PL_RATIO; set y2tics add ($POW_LIMIT);
 # set grid xtics ytics y2tics mxtics mytics my2tics;
 set grid xtics;
+set grid ytics;
 set key top left invert; set key box opaque;
 plot \
 "$FILE_NAME.MA-$MA_SIZE_2" using 0:2 axis x1y1 w l title "(MA-$MA_SIZE_2) Block Time" lc rgb "#eeeeee" lw 1.0, \

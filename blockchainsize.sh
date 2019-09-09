@@ -3,7 +3,7 @@
 
 ## GET FROM RPC
 COIN_CLI="$HOME/git/SUGAR/sugarchain-v0.16.3/src/sugarchain-cli"
-COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -testnet" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
+COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -mainnet" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
 GET_INFO="$COIN_CLI $COIN_OPTION"
 GET_TOTAL_BLOCK_AMOUNT=$($GET_INFO getblockcount)
 # GET_TOTAL_BLOCK_AMOUNT=20500 # test
@@ -60,10 +60,11 @@ GET_BLOCKSIZE_MAX=$( echo $GET_BLOCKSIZE_MINMAX | awk '{print $2}' )
 ## DRAW PLOT & LAUNCH QT
 gnuplot -persist <<-EOFMarker
 set terminal qt size 1200,600 font "VL P Gothic,10";
-set title "BLOCKS=$GET_TOTAL_BLOCK_AMOUNT       FILE=$BLOCKCHAINSIZE_FILE_NAME       LIMIT=$POW_LIMIT       MINMAX=$GET_BLOCKSIZE_MIN:$GET_BLOCKSIZE_MAX" offset -19;
+set title "BLOCKS=$GET_TOTAL_BLOCK_AMOUNT       FILE=$BLOCKCHAINSIZE_FILE_NAME       LIMIT=$POW_LIMIT       MINMAX=$GET_BLOCKSIZE_MIN:$GET_BLOCKSIZE_MAX" offset -9;
 set xlabel "Block Height";
-# set xrange [0:*]; set xtics 1, 17*30*10 rotate by 45 right; set xtics add ("GENESIS" 0) ("N+1=511" 511) ("1[day]=17280+1" 17280+1) ("2[day]=17280*2+1" 17280*2+1) ("3[day]=17280*3+1" 17280*3+1);
-set xrange [0:*]; set xtics 1, 17*50 rotate by 45 right; set xtics add ("GENESIS" 0) ("N+1=511" 511) ("1[day]=17280+1" 17280+1) ("2[day]=17280*2+1" 17280*2+1) ("3[day]=17280*3+1" 17280*3+1);
+# set xrange [0:*]; set xtics 1, 17*50*4 rotate by 45 right; set xtics add ("GENESIS" 0) ("N+1=511" 511) ("1[day]=17280+1" 17280+1) ("2[day]=17280*2+1" 17280*2+1) ("3[day]=17280*3+1" 17280*3+1);
+# set xrange [0:*]; set xtics 1, 17*50*75 rotate by 45 right; set xtics add ("GENESIS" 0) ("N+1=511" 511) ("1[day]=17280+1" 17280+1) ("2[day]=17280*2+1" 17280*2+1) ("3[day]=17280*3+1" 17280*3+1);
+set xrange [0:*]; set xtics 1, 17280+1 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set ylabel "Total Blockchain Size (MB)" tc rgb "black";
 set yrange [0:*]; set ytics nomirror;
 set format y '%.2s%cB';
