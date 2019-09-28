@@ -63,7 +63,8 @@ gnuplot -persist <<-EOFMarker
 set terminal qt size 1200,600 font "VL P Gothic,10";
 set title "BLOCKS=$GET_TOTAL_BLOCK_AMOUNT       FILE=$HASHRATE_FILE_NAME       LIMIT=$POW_LIMIT" offset -19;
 set xlabel "Block Height";
-set xrange [1:*]; set xtics 1, 17*50*10 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
+# set xrange [1:*]; set xtics 1, 17*50*10 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
+set xrange [1:*]; set xtics 1, 17280+1 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set ylabel "Hashrate (hash/s)";
 set yrange [100:100*$Y_SCALE]; set ytics 200000; set ytics nomirror;
 set y2label "Difficulty" tc rgb "red";

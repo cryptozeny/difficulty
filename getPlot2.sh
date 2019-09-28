@@ -132,7 +132,8 @@ set title "BLOCKS=$TOTAL_BLOCK_AMOUNT       FILE=$FILE_NAME       LIMIT=$POW_LIM
 # set label 1 "LIMIT = $POW_LIMIT"; set label 1 at graph 0.81, 1.03 tc rgb "black";
 # set label 2 "BLOCKS = $TOTAL_BLOCK_AMOUNT"; set label 2 at graph 0.81, 1.06 tc rgb "black";
 set xlabel "Block Height";
-set xrange $SET_XRANGE; set xtics 1, 17*50*10 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
+# set xrange $SET_XRANGE; set xtics 1, 17*50*10 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
+set xrange $SET_XRANGE; set xtics 1, 17280+1 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set ylabel "Block Time";
 set yrange $SET_YRANGE; set ytics 0, 1;
 set ytics nomirror;
