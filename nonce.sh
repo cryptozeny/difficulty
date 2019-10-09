@@ -71,6 +71,6 @@ set y2range $SET_Y2RANGE; set format y2 '%.3g'; set y2tics $POW_LIMIT, $POW_LIMI
 # set grid xtics ytics mxtics mytics;
 set key top left; set key box opaque;
 plot \
-"$NONCE_FILE_NAME" using 0:3 axis x1y1 w p title "Nonce" pt 7 ps 0.05*0.25 lc rgb "black", \
+"$NONCE_FILE_NAME" using 0:3 axis x1y1 w p title "Nonce" pt 7 ps 0.05*0.125 lc rgb "black", \
 "$NONCE_FILE_NAME" using 0:4 axis x1y2 w l title "Difficulty" lc rgb "red" lw 1.25,
 EOFMarker
