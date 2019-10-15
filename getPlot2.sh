@@ -3,7 +3,9 @@
 
 # init
 COIN_CLI="$HOME/git/SUGAR/sugarchain-v0.16.3/src/sugarchain-cli"
-COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -main" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
+# MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
+# COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword"
+COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword -port=34231 -rpcport=34228" # test
 GET_INFO="$COIN_CLI $COIN_OPTION"
 
 CHAIN_TYPE=$( $GET_INFO getblockchaininfo | jq -r '[.chain] | "\(.[0])"' )
@@ -23,7 +25,7 @@ POW_LIMIT=$( $GET_INFO getblock $GENESIS_HASH | jq -r '[.difficulty] | "\(.[0])"
 # TOTAL_BLOCK_AMOUNT=600 # test
 TOTAL_BLOCK_AMOUNT=$($GET_INFO getblockcount)
 
-FILE_NAME="$COIN_NAME-$POW_NAME-$DIFF_NAME(n$DIFF_N_SIZE).csv"
+FILE_NAME="./csv/$COIN_NAME-$POW_NAME-$DIFF_NAME(n$DIFF_N_SIZE).csv"
 
 function GET_GENESIS_OFFSET() {
     #statements
