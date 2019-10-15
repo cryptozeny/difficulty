@@ -3,7 +3,8 @@
 
 ## GET FROM RPC
 COIN_CLI="$HOME/git/SUGAR/sugarchain-v0.16.3/src/sugarchain-cli"
-COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -mainnet" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
+# COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -mainnet" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
+COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword -port=34231 -rpcport=34228" # test
 GET_INFO="$COIN_CLI $COIN_OPTION"
 GET_TOTAL_BLOCK_AMOUNT=$($GET_INFO getblockcount)
 # GET_TOTAL_BLOCK_AMOUNT=510 # test
@@ -59,7 +60,10 @@ SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*20000]" # center at 3 threads
 
 ## DRAW PLOT & LAUNCH QT
 gnuplot -persist <<-EOFMarker
-set terminal qt size 1200,600 font "VL P Gothic,10";
+# set terminal qt size 1200,600 font "VL P Gothic,10";
+set terminal pngcairo size 1500,750 enhanced font "VL P Gothic,10";
+set output "nonce.png";
+
 set title "BLOCKS=$GET_TOTAL_BLOCK_AMOUNT       FILE=$NONCE_FILE_NAME       LIMIT=$POW_LIMIT" offset -19;
 set xlabel "Block Height";
 # set xrange [0:*]; set xtics 1, 17*50*10 rotate by 45 right; set xtics add ("1" 1) ( "N+1=$(($DIFF_N_SIZE+1))" $(($DIFF_N_SIZE+1)) );
@@ -71,6 +75,6 @@ set y2range $SET_Y2RANGE; set format y2 '%.3g'; set y2tics $POW_LIMIT, $POW_LIMI
 # set grid xtics ytics mxtics mytics;
 set key top left; set key box opaque;
 plot \
-"$NONCE_FILE_NAME" using 0:3 axis x1y1 w p title "Nonce" pt 7 ps 0.05*0.125 lc rgb "black", \
+"$NONCE_FILE_NAME" using 0:3 axis x1y1 w p title "Nonce" pt 1 ps 0.1 lc rgb "grey", \
 "$NONCE_FILE_NAME" using 0:4 axis x1y2 w l title "Difficulty" lc rgb "red" lw 1.25,
 EOFMarker
