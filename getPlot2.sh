@@ -130,6 +130,7 @@ SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*20000]"
 # plot draw
 gnuplot -persist <<-EOFMarker 
 set term qt size 1200, 600;
+set output 'getPlot2.png';
 set title "BLOCKS=$TOTAL_BLOCK_AMOUNT       FILE=$FILE_NAME       LIMIT=$POW_LIMIT" offset -30;
 # set label 1 "LIMIT = $POW_LIMIT"; set label 1 at graph 0.81, 1.03 tc rgb "black";
 # set label 2 "BLOCKS = $TOTAL_BLOCK_AMOUNT"; set label 2 at graph 0.81, 1.06 tc rgb "black";
