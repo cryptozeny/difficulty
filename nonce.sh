@@ -59,10 +59,11 @@ PL_RATIO="0.0005"
 SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*20000]" # center at 3 threads
 
 ## DRAW PLOT & LAUNCH QT
+OUTPUT_PNG="nonce.png"
 gnuplot -persist <<-EOFMarker
 # set terminal qt size 1200,600 font "VL P Gothic,10";
-set terminal pngcairo size 1500,750 enhanced font "VL P Gothic,10";
-set output "nonce.png";
+set terminal pngcairo size 1500,750 enhanced font "VL P Gothic,11";
+set output "$OUTPUT_PNG";
 
 set title "BLOCKS=$GET_TOTAL_BLOCK_AMOUNT       FILE=$NONCE_FILE_NAME       LIMIT=$POW_LIMIT" offset -19;
 set xlabel "Block Height";
@@ -78,3 +79,9 @@ plot \
 "$NONCE_FILE_NAME" using 0:3 axis x1y1 w p title "Nonce" pt 1 ps 0.1 lc rgb "grey", \
 "$NONCE_FILE_NAME" using 0:4 axis x1y2 w l title "Difficulty" lc rgb "red" lw 1.25,
 EOFMarker
+
+# copy to clipboard
+xclip -selection clipboard -t image/png -i $OUTPUT_PNG
+
+# open PNG
+feh --scale-down $OUTPUT_PNG
