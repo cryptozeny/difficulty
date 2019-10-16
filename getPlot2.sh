@@ -140,7 +140,7 @@ set title "BLOCKS={/:Bold$TOTAL_BLOCK_AMOUNT}       FILE=$FILE_NAME       LIMIT=
 set xlabel "Block Height";
 # set xrange $SET_XRANGE; set xtics 1, 17*50*10 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set xrange $SET_XRANGE; set xtics 1, (17280*7)+1 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
-set ylabel "Block Time";
+set ylabel "Block Time (seconds)";
 set yrange $SET_YRANGE; set ytics 0, 1;
 set ytics nomirror;
 set y2label "Difficulty" tc rgb "red";
