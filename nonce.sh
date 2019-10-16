@@ -80,8 +80,13 @@ plot \
 "$NONCE_FILE_NAME" using 0:4 axis x1y2 w l title "Difficulty" lc rgb "red" lw 1.25,
 EOFMarker
 
+# echo
+echo ""
+echo -e "  \e[32m..PRINTING TO FILE $OUTPUT_PNG\e[39m"
+echo ""
+
 # copy to clipboard
 xclip -selection clipboard -t image/png -i $OUTPUT_PNG
 
 # open PNG
-feh --scale-down $OUTPUT_PNG
+feh --scale-down $OUTPUT_PNG &

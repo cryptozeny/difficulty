@@ -85,8 +85,13 @@ plot \
 "$BLOCKCHAINSIZE_FILE_NAME" using 0:3 axis x1y1 w l title "Total Blockchain Size (MB)" lc rgb "black" lw 1.5,
 EOFMarker
 
+# echo
+echo ""
+echo -e "  \e[32m..PRINTING TO FILE $OUTPUT_PNG\e[39m"
+echo ""
+
 # copy to clipboard
 xclip -selection clipboard -t image/png -i $OUTPUT_PNG
 
 # open PNG
-feh --scale-down $OUTPUT_PNG
+feh --scale-down $OUTPUT_PNG &
