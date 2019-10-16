@@ -59,7 +59,7 @@ PL_RATIO="0.0005"
 SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*20000]" # center at 3 threads
 
 ## DRAW PLOT & LAUNCH QT
-OUTPUT_PNG="nonce.png"
+OUTPUT_PNG="./png/nonce.png"
 gnuplot -persist <<-EOFMarker
 # set terminal qt size 1200,600 font "VL P Gothic,10";
 set terminal pngcairo size 1500,750 enhanced font "VL P Gothic,11";

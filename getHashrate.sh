@@ -60,7 +60,7 @@ Y2_SCALE=20000
 PL_RATIO="0.001"
 
 ## DRAW PLOT & LAUNCH QT
-OUTPUT_PNG="getHashrate.png"
+OUTPUT_PNG="./png/getHashrate.png"
 gnuplot -persist <<-EOFMarker 
 # set terminal qt size 1200,600 font "VL P Gothic,10";
 set terminal pngcairo size 1500,750 enhanced font "VL P Gothic,11";

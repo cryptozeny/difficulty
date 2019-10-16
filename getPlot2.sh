@@ -128,7 +128,7 @@ SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*20000]"
 # SET_Y2RANGE="[$POW_LIMIT:*]"
 
 ## DRAW PLOT & LAUNCH QT
-OUTPUT_PNG="getPlot2.png"
+OUTPUT_PNG="./png/getPlot2.png"
 gnuplot -persist <<-EOFMarker 
 # set term qt size 1200, 600;
 set terminal pngcairo size 1500,750 enhanced font "VL P Gothic,11";

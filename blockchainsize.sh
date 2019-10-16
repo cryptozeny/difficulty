@@ -59,7 +59,7 @@ GET_BLOCKSIZE_MAX=$( echo $GET_BLOCKSIZE_MINMAX | awk '{print $2}' )
 # SCALE_FACTOR=9
 
 ## DRAW PLOT & LAUNCH QT
-OUTPUT_PNG="blockchainsize.png"
+OUTPUT_PNG="./png/blockchainsize.png"
 gnuplot -persist <<-EOFMarker
 # set terminal qt size 1200,600 font "VL P Gothic,10";
 set terminal pngcairo size 1500,750 enhanced font "VL P Gothic,11";
