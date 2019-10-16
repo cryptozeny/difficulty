@@ -5,7 +5,8 @@
 
 ## GET FROM RPC
 COIN_CLI="$HOME/git/SUGAR/sugarchain-v0.16.3/src/sugarchain-cli"
-COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -mainnet" # MAIN: nothing | TESTNET: -testnet | REGTEST: -regtest
+# COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -mainnet" # MAIN: nothing | TESTNET: -testnet | REGTEST: -regtest
+COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword -port=34231 -rpcport=34228" # test
 GET_INFO="$COIN_CLI $COIN_OPTION"
 GET_TOTAL_BLOCK_AMOUNT=$($GET_INFO getblockcount)
 # GET_TOTAL_BLOCK_AMOUNT=3500 # test
@@ -59,12 +60,16 @@ Y2_SCALE=20000
 PL_RATIO="0.001"
 
 ## DRAW PLOT & LAUNCH QT
+OUTPUT_PNG="getHashrate.png"
 gnuplot -persist <<-EOFMarker 
-set terminal qt size 1200,600 font "VL P Gothic,10";
-set title "BLOCKS=$GET_TOTAL_BLOCK_AMOUNT       FILE=$HASHRATE_FILE_NAME       LIMIT=$POW_LIMIT" offset -19;
+# set terminal qt size 1200,600 font "VL P Gothic,10";
+set terminal pngcairo size 1500,750 enhanced font "VL P Gothic,11";
+set output "$OUTPUT_PNG";
+
+set title "BLOCKS={/:Bold$GET_TOTAL_BLOCK_AMOUNT}       FILE=$HASHRATE_FILE_NAME       LIMIT=$POW_LIMIT";
 set xlabel "Block Height";
 # set xrange [1:*]; set xtics 1, 17*50*10 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
-set xrange [1:*]; set xtics 1, 17280+1 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
+set xrange [1:*]; set xtics 1, (17280*7)+1 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set ylabel "Hashrate (hash/s)";
 set yrange [100:100*$Y_SCALE]; set ytics 200000; set ytics nomirror;
 set y2label "Difficulty" tc rgb "red";
@@ -75,3 +80,9 @@ plot \
 "$HASHRATE_FILE_NAME" using 0:2 axis x1y1 w l title "Hashrate (hash/s)" lc rgb "black" lw 1.0, \
 "$HASHRATE_FILE_NAME" using 0:3 axis x1y2 w l title "Difficulty" lc rgb "red" lw 1.0,
 EOFMarker
+
+# copy to clipboard
+xclip -selection clipboard -t image/png -i $OUTPUT_PNG
+
+# open PNG
+feh --scale-down $OUTPUT_PNG

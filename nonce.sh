@@ -65,7 +65,7 @@ gnuplot -persist <<-EOFMarker
 set terminal pngcairo size 1500,750 enhanced font "VL P Gothic,11";
 set output "$OUTPUT_PNG";
 
-set title "BLOCKS=$GET_TOTAL_BLOCK_AMOUNT       FILE=$NONCE_FILE_NAME       LIMIT=$POW_LIMIT" offset -19;
+set title "BLOCKS={/:Bold$GET_TOTAL_BLOCK_AMOUNT}       FILE=$NONCE_FILE_NAME       LIMIT=$POW_LIMIT" offset -0;
 set xlabel "Block Height";
 # set xrange [0:*]; set xtics 1, 17*50*10 rotate by 45 right; set xtics add ("1" 1) ( "N+1=$(($DIFF_N_SIZE+1))" $(($DIFF_N_SIZE+1)) );
 set xrange [0:*]; set xtics 1, (17280*7)+1 rotate by 45 right; set xtics add ("1" 1) ( "N+1=$(($DIFF_N_SIZE+1))" $(($DIFF_N_SIZE+1)) );

@@ -127,16 +127,19 @@ SET_Y2RANGE="[$POW_LIMIT:$POW_LIMIT*20000]"
 # SET_Y2RANGE="[$POW_LIMIT:2.584149979653205e-07]"
 # SET_Y2RANGE="[$POW_LIMIT:*]"
 
-# plot draw
+## DRAW PLOT & LAUNCH QT
+OUTPUT_PNG="getPlot2.png"
 gnuplot -persist <<-EOFMarker 
-set term qt size 1200, 600;
-set output 'getPlot2.png';
-set title "BLOCKS=$TOTAL_BLOCK_AMOUNT       FILE=$FILE_NAME       LIMIT=$POW_LIMIT" offset -30;
+# set term qt size 1200, 600;
+set terminal pngcairo size 1500,750 enhanced font "VL P Gothic,11";
+set output "$OUTPUT_PNG";
+
+set title "BLOCKS={/:Bold$TOTAL_BLOCK_AMOUNT}       FILE=$FILE_NAME       LIMIT=$POW_LIMIT";
 # set label 1 "LIMIT = $POW_LIMIT"; set label 1 at graph 0.81, 1.03 tc rgb "black";
 # set label 2 "BLOCKS = $TOTAL_BLOCK_AMOUNT"; set label 2 at graph 0.81, 1.06 tc rgb "black";
 set xlabel "Block Height";
 # set xrange $SET_XRANGE; set xtics 1, 17*50*10 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
-set xrange $SET_XRANGE; set xtics 1, 17280+1 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
+set xrange $SET_XRANGE; set xtics 1, (17280*7)+1 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set ylabel "Block Time";
 set yrange $SET_YRANGE; set ytics 0, 1;
 set ytics nomirror;
@@ -153,3 +156,9 @@ plot \
 "$FILE_NAME" using 1:3 axis x1y2 w l title "Difficulty" lc rgb "red" lw 1.25,
 # caution at the end: no "\"
 EOFMarker
+
+# copy to clipboard
+xclip -selection clipboard -t image/png -i $OUTPUT_PNG
+
+# open PNG
+feh --scale-down $OUTPUT_PNG
