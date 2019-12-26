@@ -2,10 +2,10 @@
 ## getDifficulty
 
 # init
-COIN_CLI="$HOME/git/SUGAR/sugarchain-v0.16.3/src/sugarchain-cli"
+COIN_CLI="$HOME/git/SUGAR/SUGARCHAIN/sugarchain/src/sugarchain-cli"
 # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
 # COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword"
-COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword -port=34231 -rpcport=34228" # test
+COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword -port=54230 -rpcport=54229" # test
 GET_INFO="$COIN_CLI $COIN_OPTION"
 
 CHAIN_TYPE=$( $GET_INFO getblockchaininfo | jq -r '[.chain] | "\(.[0])"' )
