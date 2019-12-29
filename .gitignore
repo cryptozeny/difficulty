@@ -1,6 +1,6 @@
 #*.png
 #*.png*
-*.csv
+#*.csv
 **/csv/*.csv.MA-*
 csv/main.Sugarchain(t5)-YP-DS(n510).csv.MA-170
 csv/main.Sugarchain(t5)-YP-DS(n510).csv.MA-34
