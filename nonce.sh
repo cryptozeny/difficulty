@@ -4,7 +4,7 @@
 ## GET FROM RPC
 COIN_CLI="$HOME/git/SUGAR/sugarchain-v0.16.3/src/sugarchain-cli"
 # COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -mainnet" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
-COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword -port=34231 -rpcport=34228" # test
+COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword -port=24230 -rpcport=24229"
 GET_INFO="$COIN_CLI $COIN_OPTION"
 GET_TOTAL_BLOCK_AMOUNT=$($GET_INFO getblockcount)
 # GET_TOTAL_BLOCK_AMOUNT=510 # test
