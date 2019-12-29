@@ -2,10 +2,11 @@
 ## getDifficulty
 
 # init
-COIN_CLI="$HOME/git/SUGAR/SUGARCHAIN/sugarchain/src/sugarchain-cli"
+# COIN_CLI="$HOME/git/SUGAR/SUGARCHAIN/sugarchain/src/sugarchain-cli"
+COIN_CLI="$HOME/git2/TEST-SUGAR/SUGARCHAIN/sugarchain-0.16.3/bin/sugarchain-cli"
 # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
 # COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword"
-COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword -port=54230 -rpcport=54229" # test
+COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword -port=24230 -rpcport=24229"
 GET_INFO="$COIN_CLI $COIN_OPTION"
 
 CHAIN_TYPE=$( $GET_INFO getblockchaininfo | jq -r '[.chain] | "\(.[0])"' )
@@ -102,10 +103,14 @@ fi
 # https://rosettacode.org/wiki/Averages/Simple_moving_average#AWK
 # P = MA_WINDOW
 
-MA_SIZE_1="170"
-MA_SIZE_2="34"
+MA_SIZE_0="4080"
+# MA_SIZE_1="170"
+MA_SIZE_1="680"
+# MA_SIZE_2="34"
+MA_SIZE_2="136"
 
-awk '{print $1, $5}' $FILE_NAME | awk -v DIFF_N_SIZE="$DIFF_N_SIZE" 'BEGIN { P = DIFF_N_SIZE; } { x = $2; i = NR % P; MA += (x - Z[i]) / P; Z[i] = x; print $1, MA; }' > $FILE_NAME.MA-$DIFF_N_SIZE
+# awk '{print $1, $5}' $FILE_NAME | awk -v DIFF_N_SIZE="$DIFF_N_SIZE" 'BEGIN { P = DIFF_N_SIZE; } { x = $2; i = NR % P; MA += (x - Z[i]) / P; Z[i] = x; print $1, MA; }' > $FILE_NAME.MA-$DIFF_N_SIZE
+awk '{print $1, $5}' $FILE_NAME | awk -v MA_SIZE="$MA_SIZE_0" 'BEGIN { P = MA_SIZE; } { x = $2; i = NR % P; MA += (x - Z[i]) / P; Z[i] = x; print $1, MA; }' > $FILE_NAME.MA-$MA_SIZE_0
 awk '{print $1, $5}' $FILE_NAME | awk -v MA_SIZE="$MA_SIZE_1" 'BEGIN { P = MA_SIZE; } { x = $2; i = NR % P; MA += (x - Z[i]) / P; Z[i] = x; print $1, MA; }' > $FILE_NAME.MA-$MA_SIZE_1
 awk '{print $1, $5}' $FILE_NAME | awk -v MA_SIZE="$MA_SIZE_2" 'BEGIN { P = MA_SIZE; } { x = $2; i = NR % P; MA += (x - Z[i]) / P; Z[i] = x; print $1, MA; }' > $FILE_NAME.MA-$MA_SIZE_2
 
@@ -139,7 +144,7 @@ set title "BLOCKS={/:Bold$TOTAL_BLOCK_AMOUNT}       FILE=$FILE_NAME       LIMIT=
 # set label 2 "BLOCKS = $TOTAL_BLOCK_AMOUNT"; set label 2 at graph 0.81, 1.06 tc rgb "black";
 set xlabel "Block Height";
 # set xrange $SET_XRANGE; set xtics 1, 17*50*10 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
-set xrange $SET_XRANGE; set xtics 1, (17280*7)+1 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
+set xrange $SET_XRANGE; set format x '%.0f'; set xtics 1, (17280*7)+1 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set ylabel "Block Time (seconds)";
 set yrange $SET_YRANGE; set ytics 0, 1;
 set ytics nomirror;
@@ -152,7 +157,7 @@ set key top left invert; set key box opaque;
 plot \
 "$FILE_NAME.MA-$MA_SIZE_2" using 0:2 axis x1y1 w l title "(MA-$MA_SIZE_2) Block Time" lc rgb "#eeeeee" lw 1.0, \
 "$FILE_NAME.MA-$MA_SIZE_1" using 0:2 axis x1y1 w l title "(MA-$MA_SIZE_1) Block Time" lc rgb "#cccccc" lw 1.0, \
-"$FILE_NAME.MA-$DIFF_N_SIZE" using 0:2 axis x1y1 w l title "(MA-$DIFF_N_SIZE) Block Time" lc rgb "black" lw 1.25, \
+"$FILE_NAME.MA-$MA_SIZE_0" using 0:2 axis x1y1 w l title "(MA-$MA_SIZE_0) Block Time" lc rgb "black" lw 1.25, \
 "$FILE_NAME" using 1:3 axis x1y2 w l title "Difficulty" lc rgb "red" lw 1.25,
 # caution at the end: no "\"
 EOFMarker
