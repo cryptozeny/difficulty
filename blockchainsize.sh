@@ -4,7 +4,7 @@
 ## GET FROM RPC
 COIN_CLI="$HOME/git/SUGAR/sugarchain-v0.16.3/src/sugarchain-cli"
 # COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -mainnet" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
-COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword -port=34231 -rpcport=34228" # test
+COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword -port=24230 -rpcport=24229"
 GET_INFO="$COIN_CLI $COIN_OPTION"
 GET_TOTAL_BLOCK_AMOUNT=$($GET_INFO getblockcount)
 # GET_TOTAL_BLOCK_AMOUNT=20500 # test
@@ -69,14 +69,14 @@ set title "BLOCKS={/:Bold$GET_TOTAL_BLOCK_AMOUNT}       FILE=$BLOCKCHAINSIZE_FIL
 set xlabel "Block Height";
 # set xrange [0:*]; set xtics 1, 17*50*4 rotate by 45 right; set xtics add ("GENESIS" 0) ("N+1=511" 511) ("1[day]=17280+1" 17280+1) ("2[day]=17280*2+1" 17280*2+1) ("3[day]=17280*3+1" 17280*3+1);
 # set xrange [0:*]; set xtics 1, 17*50*75 rotate by 45 right; set xtics add ("GENESIS" 0) ("N+1=511" 511) ("1[day]=17280+1" 17280+1) ("2[day]=17280*2+1" 17280*2+1) ("3[day]=17280*3+1" 17280*3+1);
-set xrange [0:*]; set xtics 1, (17280*7)+1 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
+set xrange [0:*]; set format x '%.0f'; set xtics 1, (17280*7)+1 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set ylabel "Total Blockchain Size (MB)" tc rgb "black";
 set yrange [0:*]; set ytics nomirror;
-set format y "%.0s %cB";
+set format y "%.2s %cB";
 set y2label "Each Block Size (Byte)" tc rgb "red";
 # set y2range [$GET_BLOCKSIZE_MIN:$GET_BLOCKSIZE_MAX]; set y2tics $GET_BLOCKSIZE_MIN, $(( ($GET_BLOCKSIZE_MAX-$GET_BLOCKSIZE_MIN)/4 )); #set y2tics add ("1000=1kB" 1000);
 set y2range [$GET_BLOCKSIZE_MIN:$GET_BLOCKSIZE_MAX]; set y2tics 0, 2.5e+5; set y2tics add ("%.3s %cB" $GET_BLOCKSIZE_MAX);
-set format y2 "%.3s %cB";
+set format y2 "%.2s %cB";
 set grid xtics ytics mxtics mytics my2tics;
 set mxtics 1;
 set key top left; set key box opaque;
