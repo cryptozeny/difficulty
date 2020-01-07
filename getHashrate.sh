@@ -6,7 +6,7 @@
 ## GET FROM RPC
 COIN_CLI="$HOME/git/SUGAR/sugarchain-v0.16.3/src/sugarchain-cli"
 # COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -mainnet" # MAIN: nothing | TESTNET: -testnet | REGTEST: -regtest
-COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword -port=34231 -rpcport=34228" # test
+COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword -port=24230 -rpcport=24229"
 GET_INFO="$COIN_CLI $COIN_OPTION"
 GET_TOTAL_BLOCK_AMOUNT=$($GET_INFO getblockcount)
 # GET_TOTAL_BLOCK_AMOUNT=3500 # test
@@ -69,7 +69,7 @@ set output "$OUTPUT_PNG";
 set title "BLOCKS={/:Bold$GET_TOTAL_BLOCK_AMOUNT}       FILE=$HASHRATE_FILE_NAME       LIMIT=$POW_LIMIT";
 set xlabel "Block Height";
 # set xrange [1:*]; set xtics 1, 17*50*10 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
-set xrange [1:*]; set xtics 1, (17280*7)+1 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
+set xrange [1:*]; set format x '%.0f'; set xtics 1, (17280*7)+1 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set ylabel "Hashrate (hash/s)";
 set yrange [100:100*$Y_SCALE]; set ytics 200000; set ytics nomirror;
 set format y "%.3s %ch/s";
