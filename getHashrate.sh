@@ -55,9 +55,9 @@ done
 # Y_SCALE=4.5
 # Y2_SCALE=1.65
 # PL_RATIO="4"
-Y_SCALE=40000
-Y2_SCALE=20000
-PL_RATIO="0.001"
+Y_SCALE=50000
+Y2_SCALE=25000
+PL_RATIO="0.0004"
 
 ## DRAW PLOT & LAUNCH QT
 OUTPUT_PNG="./png/getHashrate.png"
@@ -71,7 +71,7 @@ set xlabel "Block Height";
 # set xrange [1:*]; set xtics 1, 17*50*10 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set xrange [1:*]; set format x '%.0f'; set xtics 1, (17280*7)+1 rotate by 45 right; set xtics add ("1" 1) ("N+1=511" 511);
 set ylabel "Hashrate (hash/s)";
-set yrange [100:100*$Y_SCALE]; set ytics 200000; set ytics nomirror;
+set yrange [100:100*$Y_SCALE]; set ytics 500000; set ytics nomirror;
 set format y "%.3s %ch/s";
 set y2label "Difficulty" tc rgb "red";
 set y2range [$POW_LIMIT:$POW_LIMIT*$Y2_SCALE]; set format y2 '%.3g'; set y2tics 0, $POW_LIMIT/$PL_RATIO; set y2tics add ($POW_LIMIT);
