@@ -3,7 +3,7 @@
 
 # init
 # COIN_CLI="$HOME/git/SUGAR/SUGARCHAIN/sugarchain/src/sugarchain-cli"
-COIN_CLI="$HOME/git2/TEST-SUGAR/SUGARCHAIN/sugarchain-0.16.3/bin/sugarchain-cli"
+COIN_CLI="$HOME/git/SUGAR/SUGARCHAIN/sugarchain/src/sugarchain-cli"
 # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
 # COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword"
 COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword -port=24230 -rpcport=24229"

@@ -2,7 +2,7 @@
 ## getBlockchainSize
 
 ## GET FROM RPC
-COIN_CLI="$HOME/git/SUGAR/sugarchain-v0.16.3/src/sugarchain-cli"
+COIN_CLI="$HOME/git/SUGAR/SUGARCHAIN/sugarchain/src/sugarchain-cli"
 # COIN_OPTION="-rpcuser=rpcuser -rpcpassword=rpcpassword -mainnet" # MAIN: -main | TESTNET: -testnet | REGTEST: -regtest
 COIN_OPTION="-main -rpcuser=rpcuser -rpcpassword=rpcpassword -port=24230 -rpcport=24229"
 GET_INFO="$COIN_CLI $COIN_OPTION"
